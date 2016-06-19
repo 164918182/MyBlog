@@ -10,6 +10,7 @@
 * `Api查看`：集成Swagger, 访问MyBlog/api查看所有Api
 * `项目管理`：github,可以使用Egit
 * `MyBatis分页`：pageHelper
+* `基本CRUD`：mybatis-plus,基本的CRUD操作
 * `全文检索`：lucene5+中文分词+高亮,注释完整
 * `shiro`：权限管理。  还没开始用哦，等我看完开涛哥的博客。
  

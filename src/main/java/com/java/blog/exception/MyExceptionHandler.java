@@ -8,8 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import com.google.common.base.Throwables;
@@ -22,11 +22,11 @@ import lombok.extern.log4j.Log4j;
  */
 @Log4j
 @ControllerAdvice("com.java.blog.controller")
+@RestController
 public class MyExceptionHandler {
 
 	@ExceptionHandler(value = Exception.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	@ResponseBody
 	public ResponseJson exception(Exception e, WebRequest request) {
 		String message = Throwables.getRootCause(e).getMessage();
 		log.error(e);
@@ -37,7 +37,6 @@ public class MyExceptionHandler {
 	 */
 	@ExceptionHandler(value = ParamException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ResponseBody
 	public ResponseJson paramException(ParamException e, WebRequest request) {
 		StringBuilder message = new StringBuilder(e.getMessage());
 		log.error(e);
@@ -55,9 +54,8 @@ public class MyExceptionHandler {
 
 	/**@Describe：未传递参数异常
 	 */
-/*	@ExceptionHandler(value = ParamException.class)
+	@ExceptionHandler(value = MissingServletRequestParameterException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ResponseBody
 	public ResponseJson missingServletRequestParameterException(MissingServletRequestParameterException e,
 			WebRequest request) {
 		StringBuilder message = new StringBuilder("需要参数:");
@@ -70,11 +68,10 @@ public class MyExceptionHandler {
 		}
 		message.deleteCharAt(message.length() - 1);
 		return new ResponseJson(false, message.toString());
-	}*/
+	}
 
 	@ExceptionHandler(value = BusinessException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ResponseBody
 	public ResponseJson businessException(BusinessException e, WebRequest request) {
 		String message = e.getMessage();
 		log.error(e);
@@ -83,7 +80,6 @@ public class MyExceptionHandler {
 
 	@ExceptionHandler(value = IOException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ResponseBody
 	public ResponseJson iOException(IOException e, WebRequest request) {
 		String message = e.getMessage();
 		log.error(e);

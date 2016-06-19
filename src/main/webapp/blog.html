@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title></title>
+</head>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="css/bootstrapValidator.min.css" />
+<link rel="stylesheet" type="text/css" href="css/kkpager_orange.css" />
+<link rel="stylesheet" type="text/css" href="css/base.css" />
+<script src="js/angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/jquery-2.2.4.min.js" type="text/javascript"
+	charset="utf-8"></script>
+<script src="js/html5shiv.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/kkpager.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/bootstrapValidator.min.js" type="text/javascript"
+	charset="utf-8"></script>
+<body ng-app="myApp" style="padding: 50px;">
+	<div class="container" ng-controller="myCtrl">
+		<header>
+			<nav class="navbar navbar-inverse navbar-fixed-top">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="collapsed navbar-toggle"
+							data-toggle="collapse" data-target="#taoyu">
+							<span class="sr-only">切换导航</span> <span class="icon-bar"></span>
+							<span class="icon-bar"></span> <span class="icon-bar"></span>
+						</button>
+						<a class=" navbar-brand" href="index.html">首页</a>
+
+					</div>
+					<div class="collapse navbar-collapse" id="taoyu">
+						<ul class="nav navbar-nav">
+							<li><a href="blog.html" class="active">博客</a></li>
+							<li><a href="">心情</a></li>
+							<li><a href="">个人介绍</a></li>
+						</ul>
+						<form class="navbar-form navbar-left hidden-xs" role="search">
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="全文检索" ng-model="info" />
+							</div>
+							<button type="button" class="btn btn-default" ng-click="searchBlog()">
+								<span class="glyphicon glyphicon-search" ></span>
+							</button>
+						</form>
+						<ul class="nav navbar-nav navbar-right">
+							<li><a href="#" class="btn" data-toggle="modal"
+								data-target="#myModal">登录</a></li>
+							<li><a href="#">注册</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</header>
+		<div class="modal fade " id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true"></button>
+						<h4 class="modal-title" id="myModalLabel">用户登录</h4>
+					</div>
+					<div class="modal-body">
+						<form role="form" id="myForm" class="form-horizontal">
+							<div class="form-group form-group-lg">
+								<label for="username" class="control-label ">用户名</label> <input
+									type="text" class="form-control col-lg-5" name="username"
+									id="username" />
+							</div>
+							<div class="form-group form-group-lg">
+								<label for="password" class="control-label">密码</label> <input
+									type="password" class="form-control" name="password"
+									id="password" />
+							</div>
+							<div class="checkbox">
+								<label><input type="checkbox"> 记住我</label>
+							</div>
+							<button type="submit" class="btn btn-primary">提交更改</button>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<ul class="list-group" ng-repeat="blog in blogs">
+					<li class="list-group-item"><a href="">{{blog.title}}</a></li>
+					<li class="list-group-item"><span>{{blog.summary}}</span></li>
+					<li class="list-group-item"><mark>发布于：</mark>{{blog.releaseDate}}<small>阅读（
+							{{blog.clickHit}} ） 评论（ {{blog.replyHit}} ）</small></li>
+				</ul>
+				<div id="kkpager"></div>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="js/myApp/blog.js" type="text/javascript" charset="utf-8"></script>
+
+
+<script type="text/javascript">
+	//生成分页控件
+	function getPage(page, $scope, $http) {
+		kkpager.generPageHtml({
+			pno : page.pageNum,
+			mode : 'click',
+			//总页码  
+			total : page.totalPage,
+			//总数据条数  
+			totalRecords : page.totalRecords,
+			click : function(n) {
+				$http({
+					url : 'blog/blogs?pageNum=' + n + '&pageSize=5',
+					method : 'GET'
+				}).success(function(data) {
+					console.log(data)
+					$scope.blogs = data.page.results;
+				}).error(function(data) {
+					alert(data.msg)
+				});
+				this.selectPage(n);
+			}
+		});
+	}
+	/*表单验证  */
+	$(function() {
+		$('#myForm').bootstrapValidator({
+			message : 'This value is not valid',
+			feedbackIcons : {
+				valid : 'glyphicon glyphicon-ok',
+				invalid : 'glyphicon glyphicon-remove',
+				validating : 'glyphicon glyphicon-refresh'
+			},
+			fields : {
+				username : {
+					message : '用户名必填',
+					validators : {
+						notEmpty : {
+							message : '用户名不能为空'
+						},
+						stringLength : {
+							min : 6,
+							max : 30,
+							message : '用户名在6到三十位之间'
+						},
+						regexp : {
+							regexp : /^[a-zA-Z0-9_\.]+$/,
+							message : '用户名必须在字母数字和下划线之间'
+						}
+					}
+				},
+				password : {
+					validators : {
+						notEmpty : {
+							message : '密码不能为空'
+						}
+					}
+				}
+			}
+		}).on('success.form.bv', function(e) {
+			// Prevent form submission
+			e.preventDefault();
+			// Get the form instance
+			var $form = $(e.target);
+			// Get the BootstrapValidator instance
+			var bv = $form.data('bootstrapValidator');
+			// Use Ajax to submit form data
+			$.post($form.attr('action'), $form.serialize(), function(result) {
+				console.log(result);
+			}, 'json')
+		});
+	});
+</script>
+
+</html>

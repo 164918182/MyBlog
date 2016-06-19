@@ -1,0 +1,15 @@
+body {
+	font-family: "微软雅黑";
+}
+
+#myModal {
+	top: 16%;
+}
+img{
+	width: 100%;
+}
+
+#kkpager_btn_go_input{
+box-sizing:content-box;
+padding:2px
+}

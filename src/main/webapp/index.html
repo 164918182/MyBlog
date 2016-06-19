@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title></title>
+	</head>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/bootstrapValidator.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/base.css" />
+	<script src="js/angular.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-2.2.4.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/html5shiv.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/bootstrapValidator.min.js" type="text/javascript" charset="utf-8"></script>
+
+	<body>
+	
+		<header>
+			<nav class="navbar navbar-inverse navbar-fixed-top">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="collapsed navbar-toggle" data-toggle="collapse" data-target="#taoyu">
+							<span class="sr-only">切换导航</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						</button>
+						<a class=" navbar-brand active" href="index.html">首页</a>
+
+					</div>
+					<div class="collapse navbar-collapse" id="taoyu">
+						<ul class="nav navbar-nav">
+							<li><a href="blog.html">博客</a></li>
+							<li><a href="">心情</a></li>
+							<li><a href="">个人介绍</a></li>
+						</ul>
+						<form class="navbar-form navbar-left hidden-xs" role="search">
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="全文检索">
+							</div>
+							<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+						</form>
+						<ul class="nav navbar-nav navbar-right">
+							<li><a href="#" class="btn" data-toggle="modal" data-target="#myModal">登录</a></li>
+							<li><a href="#">注册</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</header>
+		<div id="myCarousel" class="carousel slide" data-ride="carousel">
+			<!-- 轮播（Carousel）指标 -->
+			<ol class="carousel-indicators">
+				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+				<li data-target="#myCarousel" data-slide-to="1"></li>
+				<li data-target="#myCarousel" data-slide-to="2"></li>
+			</ol>
+			<!-- 轮播（Carousel）项目 -->
+			<div class="carousel-inner">
+				<div class="item active">
+					<img src="images/example-slide-1.jpg" alt="First slide">
+					<div class="carousel-caption">
+						<h2>首页</h2>
+						<p>This is a learning project</p>
+					</div>
+				</div>
+				<div class="item">
+					<img src="images/example-slide-2.jpg" alt="Second slide">
+					<div class="carousel-caption">标题 2</div>
+				</div>
+				<div class="item">
+					<img src="images/example-slide-3.jpg" alt="Third slide">
+					<div class="carousel-caption">标题 3</div>
+				</div>
+			</div>
+			<!-- 轮播（Carousel）导航 -->
+			<a class="carousel-control left" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+			<a class="carousel-control right" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+		</div>
+		<div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+						<h4 class="modal-title" id="myModalLabel">用户登录</h4>
+					</div>
+					<div class="modal-body">
+						<form role="form" id="myForm" class="form-horizontal">
+							<div class="form-group form-group-lg">
+								<label for="username" class="control-label ">用户名</label>
+								<input type="text" class="form-control col-lg-5" name="username" id="username" />
+							</div>
+							<div class="form-group form-group-lg">
+								<label for="password" class="control-label">密码</label>
+									<input type="password" class="form-control" name="password" id="password" />
+							</div>
+							<div class="checkbox">
+								<label><input type="checkbox"> 记住我</label>
+							</div>
+							<button type="submit" class="btn btn-primary">提交更改</button>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<section>
+			<div class="container ">
+				<div class="col-md-8 col-sm-6 ">
+					<h2 class="page-header ">主题</h2>
+					<p>主题</p>
+				</div>
+				<div class="col-md-3 visible-xs alert alert-info ">
+					<h2 class="page-header ">个人介绍</h2>
+				</div>
+			</div>
+		</section>
+	</body>
+	<script type="text/javascript">
+	$(function() {
+		  $('#myForm').bootstrapValidator({
+		    message: 'This value is not valid',
+		    feedbackIcons: {
+		      valid: 'glyphicon glyphicon-ok',
+		      invalid: 'glyphicon glyphicon-remove',
+		      validating: 'glyphicon glyphicon-refresh'
+		    },
+		    fields: {
+		      username: {
+		        message: '用户名必填',
+		        validators: {
+		          notEmpty: {
+		            message: '用户名不能为空'
+		          },
+		          stringLength: {
+		            min: 6,
+		            max: 30,
+		            message: '用户名在6到三十位之间'
+		          },
+		          regexp: {
+		            regexp: /^[a-zA-Z0-9_\.]+$/,
+		            message: '用户名必须在字母数字和下划线之间'
+		          }
+		        }
+		      },
+		      password: {
+		        validators: {
+		          notEmpty: {
+		            message: '密码不能为空'
+		          }
+		        }
+		      }
+		    }
+		  }).on('success.form.bv',
+		  function(e) {
+		    // Prevent form submission
+		    e.preventDefault();
+		    // Get the form instance
+		    var $form = $(e.target);
+		    // Get the BootstrapValidator instance
+		    var bv = $form.data('bootstrapValidator');
+		    // Use Ajax to submit form data
+		    $.post($form.attr('action'), $form.serialize(),
+		    function(result) {
+		      console.log(result);
+		    },
+		    'json')
+		  });
+		});
+	</script>
+
+</html>

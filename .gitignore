@@ -1,0 +1,14 @@
+*.class
+
+.mtj
+.tmp/
+
+/target
+/src/test
+# Package Files #
+
+*.jar
+
+*.war
+
+*.ear

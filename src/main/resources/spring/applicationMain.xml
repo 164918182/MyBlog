@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/cache
+       http://www.springframework.org/schema/cache/spring-cache.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 自动扫描 -->
+	<context:component-scan base-package="com.java.blog" />
+	<!-- 引入配置文件 -->
+	<context:property-placeholder location="classpath:common.properties" />
+	<!-- 启用缓存注解功能，这个是必须的，否则注解不会生效，另外，该注解一定要声明在spring主配置文件中才会生效 -->
+	<cache:annotation-driven cache-manager="cacheManager" />
+	<!-- redis连接池 -->
+	<import resource="redis-spring.xml" />
+	<import resource="aop-spring.xml" />
+	<import resource="jdbc-spring.xml" />
+	<!-- <import resource="shiro-spring.xml" /> -->
+
+</beans>

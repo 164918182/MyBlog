@@ -1,12 +1,12 @@
 ##简介
-这是一个本人的学习项目,所以会不断改进集成优秀的东西.很多不是很必要的,选取适用的,尽量会注释完整方便大家一起交流学习.
+这是一个本人的学习项目,所以会不断改进集成优秀的东西.很多不是很必要的,选取适用的,尽量会注释完整方便大家一起交流学习.一些东西是基本使用，需要深入再对兴趣点深入。后面会加工作流activity(简单使用实现游客发表博客，管理员审核通过。。强行使用啊- -),项目较小还没想好怎么用MQ,或者kafka. 后面可能会改成dubbo项目结合zoonkeeper.
 ##后端
 * `框架`：Spring+SpringMvc+MyBatis
 * `项目构建工具`：Maven
 * `连接池`：Druid,集成监控，访问MyBlog/druid
 * `异常统一管理`：@ControllerAdvice 新特性，详情见exception包
 * `缓存管理`：Spring集成Redis,需要安装Redis,并修改配置文件.现在是注解使用,不灵活.可以用util包下的工具类
-* `简洁代码`：注解声明Bean,简化代码.需要找到Jar包双击安装. 
+* `简洁代码`：lombok注解声明Bean,简化代码.需要找到Jar包双击安装. 
 * `Api查看`：集成Swagger, 访问MyBlog/api查看所有Api
 * `项目管理`：github,可以使用Egit
 * `MyBatis分页`：pageHelper
@@ -21,6 +21,7 @@
 * `兼容html5`：html5shiv
 * `表单验证`：bootstrapValidator
 * `分页`：kkPager
+* `编辑器`：UEditor或者kindEditor(等后面写到了再选)
 
 ##有问题反馈
 在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流

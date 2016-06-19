@@ -2,9 +2,11 @@ package com.java.blog.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
+import com.baomidou.mybatisplus.annotations.IdType;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.swagger.annotations.ApiModel;
@@ -17,19 +19,22 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @ApiModel("博客")
+@TableName("blog")
 public class Blog implements Serializable {
 
-	private static final long serialVersionUID = 24077686880928000L;
+	@TableField(exist = false)
+	private static final long serialVersionUID = 1L;
 
+	@TableId(type = IdType.AUTO)
 	@ApiModelProperty("主键")
 	private Integer id;
 
 	@ApiModelProperty("博客标题")
 	private String title;
-	
+
 	@ApiModelProperty("简介")
 	private String summary;
-	
+
 	@ApiModelProperty("简介")
 	private String keyWord;
 
@@ -46,6 +51,7 @@ public class Blog implements Serializable {
 	@ApiModelProperty("回复次数")
 	private Integer replyHit;
 
+	@TableField(exist = false)
 	@ApiModelProperty("博客类型")
 	private BlogType blogType;
 

@@ -43,12 +43,14 @@
 		<property name="filters" value="stat" />
 	</bean>
 	<!-- 配置mybatis的sqlSessionFactory -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<bean id="sqlSessionFactory"
+		class="com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<!-- 自动扫描mappers.xml文件 -->
 		<property name="mapperLocations" value="classpath:com/java/blog/mappers/*.xml"></property>
-		<!-- mybatis配置文件(不需要了) -->
-		<!-- <property name="configLocation" value="classpath:mybatis-config.xml"></property> -->
+		<!-- mybatis配置文件 -->
+		<property name="configLocation" value="classpath:spring/mybatis-config.xml"></property>
+		<!--自动扫描实体映射 -->
 		<property name="typeAliasesPackage" value="com.java.blog.entity" />
 		<property name="plugins">
 			<array>
@@ -60,8 +62,6 @@
 						</value>
 					</property>
 				</bean>
-				<!-- <bean class="com.isea533.mybatis.mapperhelper.MapperInterceptor" 
-					/> -->
 			</array>
 		</property>
 	</bean>

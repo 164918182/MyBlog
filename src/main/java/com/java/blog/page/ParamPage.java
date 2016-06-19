@@ -6,9 +6,9 @@ import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 
-/**
- * CreatBy 陶宇 
- * Date: 2016年5月22日下午10:05:03 
+
+/**@author TaoYu
+ * @Description 如果以对象形式上传分页信息用这个
  */
 @ApiModel("上传分页")
 @Getter

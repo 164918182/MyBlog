@@ -40,12 +40,13 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
 import com.java.blog.entity.Blog;
+import com.java.blog.exception.DocException;
+import com.java.blog.exception.IndexWriterCloseException;
 
 import lombok.extern.log4j.Log4j;
 
 /**@author TaoYu
  * @Description LUCENE工具类，不支持并发
- * @Date: 2016年6月16日下午9:34:19 
  */
 @Log4j
 public class LuceneUtil {
@@ -65,8 +66,6 @@ public class LuceneUtil {
 	}
 
 	/**@Describe：得到写索引实例
-	 * @Date： 2016年6月16日下午9:34:23
-	 * @return
 	 */
 	private static IndexWriter getWriter() {
 		IndexWriter writer = null;
@@ -80,50 +79,70 @@ public class LuceneUtil {
 	}
 
 	/**@Describe：添加索引
-	 * @Date： 2016年6月16日下午9:37:52
-	 * @param blog
-	 * @throws IOException 
 	 */
-	public static void addIndex(Blog blog) throws IOException {
+	public static void addIndex(Blog blog) throws IndexWriterCloseException, DocException {
 		IndexWriter writer = getWriter();
-		Document doc = new Document();
-		doc.add(new IntField("id", blog.getId(), Store.YES));
-		doc.add(new TextField("title", blog.getTitle(), Store.YES));
-		doc.add(new StringField("releaseDate", DateFormatUtils.format(new Date(), "yyyy-MM-dd"), Store.NO));
-		doc.add(new TextField("content", blog.getContent(), Store.YES));
-		writer.addDocument(doc);
-		writer.close();
+		try {
+			Document doc = new Document();
+			doc.add(new IntField("id", blog.getId(), Store.YES));
+			doc.add(new TextField("title", blog.getTitle(), Store.YES));
+			doc.add(new StringField("releaseDate", DateFormatUtils.format(new Date(), "yyyy-MM-dd"), Store.NO));
+			doc.add(new TextField("content", blog.getContent(), Store.YES));
+			writer.addDocument(doc);
+		} catch (IOException e) {
+			throw new DocException("添加文档异常");
+		} finally {
+			closeWriter(writer);
+
+		}
+
+	}
+
+	/**@Describe：关闭写索引流
+	 */
+	private static void closeWriter(IndexWriter writer) throws IndexWriterCloseException {
+		try {
+			writer.close();
+		} catch (IOException e) {
+			throw new IndexWriterCloseException();
+		}
+
 	}
 
 	/**@Describe：更新索引
-	 * @Date： 2016年6月16日下午9:39:15
-	 * @param blog
-	 * @throws IOException 
-	 * @throws Exception
 	 */
-	public void updateIndex(Blog blog) throws IOException {
+	public void updateIndex(Blog blog) throws DocException, IndexWriterCloseException {
 		IndexWriter writer = getWriter();
-		Document doc = new Document();
-		doc.add(new StringField("id", String.valueOf(blog.getId()), Store.YES));
-		doc.add(new TextField("title", blog.getTitle(), Store.YES));
-		doc.add(new StringField("releaseDate", DateFormatUtils.format(new Date(), "yyyy-MM-dd"), Store.NO));
-		doc.add(new TextField("content", blog.getContent(), Store.YES));
-		writer.updateDocument(new Term("id", String.valueOf(blog.getId())), doc);
-		writer.close();
+		try {
+			Document doc = new Document();
+			doc.add(new StringField("id", String.valueOf(blog.getId()), Store.YES));
+			doc.add(new TextField("title", blog.getTitle(), Store.YES));
+			doc.add(new StringField("releaseDate", DateFormatUtils.format(new Date(), "yyyy-MM-dd"), Store.NO));
+			doc.add(new TextField("content", blog.getContent(), Store.YES));
+			writer.updateDocument(new Term("id", String.valueOf(blog.getId())), doc);
+		} catch (IOException e) {
+			throw new DocException("更新文档异常");
+		} finally {
+			closeWriter(writer);
+		}
 
 	}
 
-	/**@Describe：删除索引
-	 * @Date： 2016年6月16日下午9:45:05
-	 * @param blogId
-	 * @throws IOException
+	/**@throws IndexWriterCloseException 
+	 * @throws DocException 
+	 * @Describe：删除索引
 	 */
-	public void deleteIndex(String blogId) throws IOException {
+	public void deleteIndex(String blogId) throws IndexWriterCloseException, DocException {
 		IndexWriter writer = getWriter();
-		writer.deleteDocuments(new Term("id", blogId));
-		writer.forceMergeDeletes();// 真正删除(好像有效率问题)TODO 改天详细看一下
-		writer.commit();
-		writer.close();
+		try {
+			writer.deleteDocuments(new Term("id", blogId));
+			writer.forceMergeDeletes();// 真正删除(好像有效率问题)TODO 改天详细看一下
+			writer.commit();
+		} catch (IOException e) {
+			throw new DocException("删除文档异常");
+		} finally {
+			closeWriter(writer);
+		}
 	}
 
 	/**@Describe：查询索引博客（里面一些可以抽出来，为了流程完整暂不处理）

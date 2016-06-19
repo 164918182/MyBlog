@@ -3,7 +3,11 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.java.blog.dao.BlogDao">
-
+	<!-- 通用查询结果列 -->
+	<sql id="Base_Column_List">
+		id, title, summary, releaseDate, clickHit, replyHit, content, typeId,keyWord
+	</sql>
+	
 	<resultMap type="com.java.blog.entity.Blog" id="BlogResult">
 		<result property="id" column="id" />
 		<result property="title" column="title" />
@@ -17,53 +21,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			select="com.java.blog.dao.BlogTypeDao.findById"></association>
 	</resultMap>
 
-	<select id="list" parameterType="Map" resultType="Blog">
-		select * from t_blog
-		<where>
-			<if test="title!=null and title!='' ">
-				and title like #{title}
-			</if>
-			<if test="typeId!=null and typeId!='' ">
-				and typeId = #{typeId}
-			</if>
-			<if test="releaseDateStr!=null and releaseDateStr!='' ">
-				and DATE_FORMAT(releaseDate,'%Y年%m月') = #{releaseDateStr}
-			</if>
-		</where>
-		order by releaseDate desc
-	</select>
 
-	<select id="findById" parameterType="Integer" resultMap="BlogResult">
-		select *
-		from t_blog where id=#{id}
-	</select>
-
-	<update id="update" parameterType="Blog">
-		update t_blog
-		<set>
-			<if test="title!=null and title!='' ">
-				title=#{title},
-			</if>
-			<if test="summary!=null and summary!='' ">
-				summary=#{summary},
-			</if>
-			<if test="content!=null and content!='' ">
-				content=#{content},
-			</if>
-			<if test="blogType.id!=null ">
-				typeId=#{blogType.id},
-			</if>
-			<if test="clickHit!=null ">
-				clickHit=#{clickHit},
-			</if>
-			<if test="replyHit!=null ">
-				replyHit=#{replyHit},
-			</if>
-			<if test="keyWord!=null and keyWord!='' ">
-				keyWord=#{keyWord},
-			</if>
-		</set>
-		where id=#{id}
-	</update>
-
+	
 </mapper> 

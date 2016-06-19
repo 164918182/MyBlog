@@ -9,6 +9,7 @@
 * `简洁代码`：注解声明Bean,简化代码.需要找到Jar包双击安装. 
 * `Api查看`：集成Swagger, 访问MyBlog/api查看所有Api
 * `项目管理`：github,可以使用Egit
+* `MyBatis分页`：pageHelper
 * `全文检索`：lucene5+中文分词+高亮,注释完整
 * `shiro`：权限管理。  还没开始用哦，等我看完开涛哥的博客。
  
@@ -31,13 +32,13 @@
 
 * [java1234](http://www.java1234.com/) 主要的代码参考者,本项目在其之上集成改进
 * [pageHelper](https://github.com/pagehelper/Mybatis-PageHelper) 分页插件,拦截器.
+* [mybatis-plus](http://git.oschina.net/juapk/mybatis-plus) 基本CRUD,简化使用.也带了分页拦截器.（本项目没有使用，习惯了上一个）
 
 ##关于作者
 
 ```javascript
   var author = {
     name  : "陶宇",
-    qq : 332309254,
-    
+    qq : 332309254
   }
 ```

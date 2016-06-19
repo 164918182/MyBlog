@@ -19,7 +19,7 @@ public class EmailUtil {
 
 	private static final String HOSTNAME = "smtp.139.com";
 	private static final String USERNAME = "13882318678";
-	private static final String PASSWORD = "123456";
+	private static final String PASSWORD = "xxxx";
 	private static final String FROMEEMAIL = "13882318678@139.com";
 	private static final String FROMENAME = "TaoYu";
 	private static Email simpleEmail = null;

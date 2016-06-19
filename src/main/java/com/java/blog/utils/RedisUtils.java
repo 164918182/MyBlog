@@ -9,23 +9,19 @@ import redis.clients.jedis.JedisPoolConfig;
 
 public class RedisUtils {
 
-	private static JedisPool jedisPool;// 非切片连接池
-	private static String password;
-	private static Integer timeout = 0;
+	private static JedisPool jedisPool;//连接池
+	private static final String password;
+	private static final Integer timeout;
 
 	static {
-		Properties p = PropertiesUtil.getProperties("redis.properties");
-		password = p.getProperty("redis.password");
-		timeout = Integer.parseInt(p.get("redis.item.timeout").toString());
+		Properties p = PropertiesUtil.getProperties("common.properties");
+		password = p.getProperty("redis.pass");
+		timeout = Integer.parseInt(p.get("redis.timeout").toString());
 
 		JedisPoolConfig config = new JedisPoolConfig();
-		config.setMaxTotal(Integer.valueOf(p.getProperty("redis.pool.max.total")));
-		config.setMaxIdle(Integer.valueOf(p.getProperty("redis.pool.max.idle")));
-		config.setMinIdle(Integer.valueOf(p.getProperty("redis.pool.min.idle")));
-		config.setMaxWaitMillis(Long.valueOf(p.getProperty("redis.pool.maxwait")));
 		config.setTestOnBorrow(false);
 		config.setBlockWhenExhausted(true);
-		jedisPool = new JedisPool(config, p.getProperty("redis.url"), Integer.valueOf(p.getProperty("redis.port")));
+		jedisPool = new JedisPool(config, p.getProperty("redis.host"), Integer.valueOf(p.getProperty("redis.port")));
 	}
 
 	public static String get(String key) {
